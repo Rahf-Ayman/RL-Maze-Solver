@@ -1,0 +1,24 @@
+# requirements.txt
+
+# Core RL & Environment
+gymnasium>=0.29.0       # Custom environment framework
+numpy>=1.24.0           # Numerical computing (Q-tables, grids)
+
+# Neural Networks (Policy Gradient, DQN)
+torch>=2.0.0            # PyTorch for policy network
+torchvision>=0.15.0     # Optional: for image-based state inputs
+
+# Visualization
+matplotlib>=3.7.0       # Maze rendering and training plots
+seaborn>=0.12.0         # Optional: prettier plots
+
+# UI
+# tkinter is included with Python standard library (no pip install needed)
+
+# Utilities
+pandas>=2.0.0           # CSV export of training logs
+scipy>=1.10.0           # Optional: statistical analysis
+
+# Development
+jupyter>=1.0.0          # For notebooks
+ipykernel>=6.0.0        # Jupyter kernel

@@ -1,2 +1,35 @@
 __pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Local Python environments
+.venv/
+venv/
+venv*/
+env.bak/
+
+# Editor and notebook noise
 .vscode/
+.ipynb_checkpoints/
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Training outputs and logs
+logs/
+*.log
+saved_models/
+checkpoints/
+outputs/
+artifacts/
+
+# Optional generated reports and figures
+plots/
+*.png
+*.jpg
+*.jpeg
+*.gif
