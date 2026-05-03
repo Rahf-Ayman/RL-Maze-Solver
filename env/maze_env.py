@@ -114,10 +114,10 @@ class MazeEnv(gym.Env):
 	def compute_reward(self, hit_wall: bool, terminated: bool, truncated: bool) -> float:
 		if terminated:
 			return 10.0
-		if hit_wall:
-			return -0.5
 		if truncated:
 			return -1.0
+		if hit_wall:
+			return -0.5
 		return -0.01
 
 	def reset(self, *, seed: Optional[int] = None, options: Optional[dict] = None):
