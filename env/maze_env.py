@@ -107,7 +107,7 @@ class MazeEnv(gym.Env):
 		return position[0] * self.width + position[1]
 
 	def _decode_state(self, state: int) -> Tuple[int, int]:
-		row = int(state) // self.width
+		row = int(state) // self.width # ignore remainder
 		col = int(state) % self.width
 		return row, col
 
