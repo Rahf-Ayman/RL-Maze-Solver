@@ -6,7 +6,7 @@ from pathlib import Path
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from env import MazeEnv
+from envs import MazeEnv
 from agents import QLearningAgent
 from training import Trainer, get_q_learning_config, get_episode_config
 

@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, Optional
 
-from env import MazeEnv
+from envs import MazeEnv
 from training.logger import Logger
 
 
