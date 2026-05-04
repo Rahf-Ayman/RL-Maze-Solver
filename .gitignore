@@ -26,6 +26,7 @@ saved_models/
 checkpoints/
 outputs/
 artifacts/
+experiments/
 
 # Optional generated reports and figures
 plots/
@@ -33,3 +34,5 @@ plots/
 *.jpg
 *.jpeg
 *.gif
+
+

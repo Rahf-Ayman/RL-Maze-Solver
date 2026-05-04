@@ -9,8 +9,10 @@ from __future__ import annotations
 
 from typing import Any, Dict, Optional
 
+from agents import QLearningAgent
 from envs import MazeEnv
 from training.logger import Logger
+from visualization import plot_q_policy_heatmap, plot_training_curves, render_maze_snapshot
 
 
 class Trainer:
@@ -132,3 +134,39 @@ class Trainer:
     def resume(self, n_episodes: int, **kwargs) -> Logger:
         """Resume training for n more episodes."""
         return self.train(n_episodes=n_episodes, **kwargs)
+
+    def render_maze(self, path=None, title: Optional[str] = None, save_path: Optional[str] = None):
+        """Render a static maze snapshot for the current environment state."""
+
+        plot_title = title or f"Maze ({self.env.difficulty.title()})"
+        return render_maze_snapshot(
+            grid=self.env.grid,
+            agent_pos=self.env.agent_pos,
+            goal_pos=self.env.goal_pos,
+            path=path,
+            title=plot_title,
+            save_path=save_path,
+        )
+
+    def plot_training(self, moving_average_window: int = 50, save_path: Optional[str] = None):
+        """Plot reward, episode length, and rolling success from logger data."""
+
+        return plot_training_curves(
+            logger=self.logger,
+            moving_average_window=moving_average_window,
+            title_prefix="Q-Learning Training",
+            save_path=save_path,
+        )
+
+    def plot_q_policy_heatmap(self, annotate_policy: bool = True, save_path: Optional[str] = None):
+        """Plot Q-value heatmap for QLearningAgent only."""
+
+        if not isinstance(self.agent, QLearningAgent):
+            raise TypeError("Policy heatmap is only implemented for QLearningAgent.")
+
+        return plot_q_policy_heatmap(
+            env=self.env,
+            agent=self.agent,
+            annotate_policy=annotate_policy,
+            save_path=save_path,
+        )
