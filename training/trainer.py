@@ -44,6 +44,7 @@ class Trainer:
         self.logger = Logger()
         self.is_running = False
         self.current_episode = 0
+        self.last_episode_path: list[tuple[int, int]] = []
 
     def train(
         self,
@@ -107,6 +108,7 @@ class Trainer:
         total_reward = 0.0
         steps = 0
         done = False
+        path: list[tuple[int, int]] = [self.env.agent_pos]
 
         while not done:
             # Agent selects action
@@ -122,8 +124,10 @@ class Trainer:
             steps += 1
             done = terminated or truncated
             obs = next_obs
+            path.append(self.env._decode_state(next_obs))
 
         # Success if episode terminated (not truncated)
+        self.last_episode_path = path
         success = terminated if "terminated" in locals() else False
         return total_reward, steps, success
 
@@ -138,11 +142,15 @@ class Trainer:
     def render_maze(self, path=None, title: Optional[str] = None, save_path: Optional[str] = None):
         """Render a static maze snapshot for the current environment state."""
 
+        if path is None:
+            path = self.last_episode_path or None
+
         plot_title = title or f"Maze ({self.env.difficulty.title()})"
         return render_maze_snapshot(
             grid=self.env.grid,
             agent_pos=self.env.agent_pos,
             goal_pos=self.env.goal_pos,
+            start_pos=self.env.start_pos,
             path=path,
             title=plot_title,
             save_path=save_path,
