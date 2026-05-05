@@ -16,6 +16,7 @@ import numpy as np
 
 from .maze_configs import DEFAULT_START_POS, get_difficulty_config
 from .maze_generator import generate_maze
+from visualization import  render_maze_snapshot
 
 try:  # pragma: no cover - exercised implicitly when gymnasium is installed
 	import gymnasium as gym
@@ -61,23 +62,14 @@ ACTION_MAP = {
 }
 
 
-@dataclass(frozen=True)
-class MazePosition:
-	row: int
-	col: int
-
-
 class MazeEnv(gym.Env):
 	"""Maze navigation environment with a discrete state and action space."""
-
-	metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 10}
 
 	def __init__(self, difficulty: str = "medium", goal: Optional[Tuple[int, int]] = None, render_mode: Optional[str] = None, seed: Optional[int] = None):
 		super().__init__()
 
 		self.difficulty = difficulty
 		self.config = get_difficulty_config(difficulty)
-		self.render_mode = render_mode
 		self._base_seed = self.config.get("seed") if seed is None else seed
 
 		self.height = int(self.config["height"])
@@ -173,40 +165,15 @@ class MazeEnv(gym.Env):
 		self.goal_pos = self._validate_goal(new_goal)
 
 	def render(self):
-		if self.render_mode is None:
-			return None
-
-		try:
-			import matplotlib.pyplot as plt
-		except ImportError as exc:  # pragma: no cover - depends on optional dependency
-			raise ImportError("matplotlib is required for rendering the maze environment") from exc
-
-		canvas = np.array(self.grid, dtype=np.float32)
-		display = np.zeros_like(canvas)
-		display[canvas == 1] = 0.15
-		display[canvas == 0] = 0.95
-
-		agent_row, agent_col = self.agent_pos
-		goal_row, goal_col = self.goal_pos
-		display[goal_row, goal_col] = 0.55
-		display[agent_row, agent_col] = 0.25
-
-		if self._figure is None or self._axes is None:
-			self._figure, self._axes = plt.subplots(figsize=(6, 6))
-
-		self._axes.clear()
-		self._axes.imshow(display, cmap="gray", vmin=0.0, vmax=1.0)
-		self._axes.set_xticks([])
-		self._axes.set_yticks([])
-		self._axes.set_title(f"MazeEnv: {self.difficulty.title()} | steps={self.steps}")
-
-		if self.render_mode == "rgb_array":
-			self._figure.canvas.draw()
-			rgba = np.asarray(self._figure.canvas.buffer_rgba())
-			return rgba[:, :, :3].copy()
-
-		plt.pause(0.001)
-		return None
+		self._figure, self._axes = render_maze_snapshot(
+			grid=self.grid,
+			agent_pos=self.agent_pos,
+			goal_pos=self.goal_pos,
+			start_pos=self.start_pos,
+			path=None,  # or your visited path if you track it
+			title=f"MazeEnv: {self.difficulty.title()} | Seed {self._base_seed}",
+		)
+		return self._figure
 
 	def close(self):
 		if self._figure is not None:
