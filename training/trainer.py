@@ -139,6 +139,15 @@ class Trainer:
         """Resume training for n more episodes."""
         return self.train(n_episodes=n_episodes, **kwargs)
 
+    def run_episode(self) -> tuple[float, int, bool]:
+        """Run a single training episode and record the path.
+
+        This is a public wrapper around the internal episode loop for UI code
+        that wants to drive training one episode at a time.
+        """
+
+        return self._run_episode()
+
     def render_maze(self, path=None, title: Optional[str] = None, save_path: Optional[str] = None):
         """Render a static maze snapshot for the current environment state."""
 

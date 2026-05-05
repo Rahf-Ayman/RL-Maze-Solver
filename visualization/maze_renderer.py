@@ -15,6 +15,8 @@ def render_maze_snapshot(
     path: Optional[Iterable[Tuple[int, int]]] = None,
     title: str = "Maze Snapshot",
     save_path: Optional[str] = None,
+    ax=None,
+    figure=None,
 ):
     """Render a static maze image using matplotlib.
 
@@ -26,6 +28,8 @@ def render_maze_snapshot(
         path: Optional visited path to overlay.
         title: Plot title.
         save_path: Optional file path to save the plot.
+        ax: Optional matplotlib axes to draw onto.
+        figure: Optional matplotlib figure to use when ax is provided.
 
     Returns:
         (figure, axes) tuple for downstream customization.
@@ -56,7 +60,13 @@ def render_maze_snapshot(
     display[goal_row, goal_col] = (0, 1, 0) # goal = green
     display[agent_row, agent_col] = (1, 0, 0) # agent = red
 
-    figure, axes = plt.subplots(figsize=(6, 6))
+    if ax is None:
+        figure, axes = plt.subplots(figsize=(6, 6))
+    else:
+        axes = ax
+        figure = figure or axes.figure
+        axes.clear()
+
     axes.imshow(display, cmap="gray", vmin=0.0, vmax=1.0)
     axes.set_xticks([])
     axes.set_yticks([])
