@@ -65,6 +65,8 @@ class ControlPanel:
         self.root.minsize(1280, 820)
         self.root.configure(bg=BG)
 
+        self.root.protocol("WM_DELETE_WINDOW", self._on_close)
+
         self.difficulty_var = tk.StringVar(value="medium")
         self.episodes_var = tk.IntVar(value=250)
         self.window_var = tk.IntVar(value=50)
@@ -782,6 +784,17 @@ class ControlPanel:
         self.goal_col_var.set(str(col))
         self.status_var.set(f"Goal moved to ({row}, {col})")
         self._refresh_dashboard()
+
+    def _on_close(self) -> None:
+        """Handle window close event to properly clean up threads."""
+        self.stop_event.set()
+        self.pause_event.clear()
+
+        if self.training_thread and self.training_thread.is_alive():
+            self.training_thread.join(timeout=0.5)
+
+        self.root.quit()
+        self.root.destroy()
 
     def run(self) -> None:
         self.maze_canvas.mpl_connect("button_press_event", self._on_maze_click)
