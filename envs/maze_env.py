@@ -90,8 +90,8 @@ class MazeEnv(gym.Env):
 
 	def _validate_goal(self, goal: Tuple[int, int]) -> Tuple[int, int]:
 		row, col = int(goal[0]), int(goal[1])
-		if not (0 < row < self.height - 1 and 0 < col < self.width - 1):
-			raise ValueError("Goal must be inside the maze border.")
+		if not (0 < row < self.height - 1 and 0 < col < self.width - 1) or self.grid[row, col] == 1:
+			raise ValueError("Goal cannot be placed on a wall or outside the maze boundaries.")
 		self.grid[row, col] = 0
 		return row, col
 

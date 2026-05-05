@@ -27,25 +27,11 @@ def render_maze_snapshot(
     figure=None,
 ):
     """Render a static maze image using matplotlib.
-
-    Args:
-        grid: 2D maze grid where 1=wall and 0=free.
-        agent_pos: Current (row, col) of agent.
-        goal_pos: Goal (row, col) position.
-        start_pos: Optional start/source position to mark on the maze.
-        path: Optional visited path to overlay.
-        title: Plot title.
-        save_path: Optional file path to save the plot.
-        ax: Optional matplotlib axes to draw onto.
-        figure: Optional matplotlib figure to use when ax is provided.
-
-    Returns:
-        (figure, axes) tuple for downstream customization.
     """
 
     try:
         import matplotlib.pyplot as plt
-    except ImportError as exc:  # pragma: no cover
+    except ImportError as exc:
         raise ImportError("matplotlib is required for maze rendering") from exc
 
     # canvas = np.array(grid, dtype=np.float32)
