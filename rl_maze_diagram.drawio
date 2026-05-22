@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="RL Maze System - Detailed" id="0">
+    <mxGraphModel dx="1070" dy="680" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="1slmFbIXWsZ4sw-Dbfdh-5" edge="1" parent="1" source="ui" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="trainer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ui" parent="1" style="rounded=1;fillColor=#A3B18A;html=1;" value="Control Panel (UI)" vertex="1">
+          <mxGeometry height="60" width="180" x="482" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="trainer" parent="1" style="rounded=1;fillColor=#556B2F;fontColor=#FFFFFF;html=1;" value="Trainer / Training Loop" vertex="1">
+          <mxGeometry height="70" width="200" x="472" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="1slmFbIXWsZ4sw-Dbfdh-2" edge="1" parent="1" source="agent" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classicThin;endFill=1;curved=0;entryX=0.83;entryY=1.016;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.583;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;" target="agent">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="150" y="349" />
+              <mxPoint x="150" y="329" />
+              <mxPoint x="40" y="329" />
+              <mxPoint x="40" y="469" />
+              <mxPoint x="299" y="469" />
+            </Array>
+            <mxPoint x="40" y="279" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="agent" parent="1" style="rounded=1;fillColor=#6B8E23;fontColor=#FFFFFF;html=1;" value="Q-Learning Agent&#xa;• Select Action&#xa;• Update Q-Table" vertex="1">
+          <mxGeometry height="100" width="240" x="100" y="351" as="geometry" />
+        </mxCell>
+        <mxCell id="env" parent="1" style="rounded=1;fillColor=#DAD7B8;html=1;" value="Maze Environment&#xa;• Grid World&#xa;• Reward Function&#xa;• Terminal State" vertex="1">
+          <mxGeometry height="100" width="240" x="517" y="448" as="geometry" />
+        </mxCell>
+        <mxCell id="logger" parent="1" style="rounded=1;fillColor=#C2C5AA;html=1;" value="Logger&#xa;• Rewards&#xa;• Steps&#xa;• Success Rate" vertex="1">
+          <mxGeometry height="100" width="220" x="842" y="351" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="trainer" style="edgeStyle=orthogonalEdgeStyle;" target="agent" value="choose action">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="agent" style="edgeStyle=orthogonalEdgeStyle;" target="env" value="action">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="env" style="edgeStyle=orthogonalEdgeStyle;" target="agent" value="state + reward">
+          <mxGeometry relative="1" x="-0.0305" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="540" y="331" />
+              <mxPoint x="380" y="331" />
+              <mxPoint x="380" y="381" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="agent" style="loopStyle=auto;" target="agent" value="Q-update">
+          <mxGeometry relative="1" x="NaN" y="300" as="geometry">
+            <mxPoint x="-300" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="trainer" style="edgeStyle=orthogonalEdgeStyle;" target="logger" value="log metrics">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

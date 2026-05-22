@@ -13,52 +13,19 @@ from dataclasses import dataclass
 from typing import Any, Dict, Optional, Tuple
 
 import numpy as np
+import gymnasium as gym
 
 from .maze_configs import DEFAULT_START_POS, get_difficulty_config
 from .maze_generator import generate_maze
 from visualization import  render_maze_snapshot
-
-try:  # pragma: no cover - exercised implicitly when gymnasium is installed
-	import gymnasium as gym
-	from gymnasium import spaces
-except ImportError:  # pragma: no cover - keeps the package importable without gymnasium
-	class _FallbackEnv:
-		metadata: Dict[str, Any] = {}
-
-		def reset(self, *, seed: Optional[int] = None, options: Optional[dict] = None):
-			if seed is not None:
-				np.random.seed(seed)
-			return None, {}
-
-	class _FallbackDiscrete:
-		def __init__(self, n: int):
-			self.n = int(n)
-
-		def sample(self) -> int:
-			return int(np.random.randint(self.n))
-
-		def contains(self, value: Any) -> bool:
-			try:
-				candidate = int(value)
-			except (TypeError, ValueError):
-				return False
-			return 0 <= candidate < self.n
-
-	class _FallbackSpaces:
-		Discrete = _FallbackDiscrete
-
-	class _FallbackGym:
-		Env = _FallbackEnv
-
-	gym = _FallbackGym()  # type: ignore[assignment]
-	spaces = _FallbackSpaces()  # type: ignore[assignment]
+from gymnasium import spaces
 
 
 ACTION_MAP = {
-	0: (-1, 0),
-	1: (1, 0),
-	2: (0, -1),
-	3: (0, 1),
+	0: (-1, 0), ## up
+	1: (1, 0),  ## down
+	2: (0, -1), ## left
+	3: (0, 1),  ## right
 }
 
 
@@ -112,7 +79,7 @@ class MazeEnv(gym.Env):
 			return -0.5
 		return -0.01
 
-	def reset(self, *, seed: Optional[int] = None, options: Optional[dict] = None):
+	def reset(self, *, seed: Optional[int] = None):
 		super().reset(seed=seed)
 
 		if seed is not None and seed != self._base_seed:
@@ -164,7 +131,7 @@ class MazeEnv(gym.Env):
 	def set_goal(self, new_goal: Tuple[int, int]) -> None:
 		self.goal_pos = self._validate_goal(new_goal)
 
-	def render(self):
+	def render(self): ## for test in notebook
 		self._figure, self._axes = render_maze_snapshot(
 			grid=self.grid,
 			agent_pos=self.agent_pos,
