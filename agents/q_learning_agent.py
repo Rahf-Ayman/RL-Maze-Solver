@@ -56,11 +56,11 @@ class QLearningAgent(BaseAgent):
     def select_action(self, state: int) -> int:
         """Epsilon-greedy action selection."""
 
-        if self.rng.random() < self.epsilon:
+        if self.rng.random() < self.epsilon: ## explore
             return int(self.rng.integers(self.n_actions))
 
         # argmax with tie-breaking using random choice among ties
-        q_values = self.q_table[int(state)]
+        q_values = self.q_table[int(state)] ## expolit
         top = np.flatnonzero(q_values == q_values.max())
         return int(self.rng.choice(top))
 
