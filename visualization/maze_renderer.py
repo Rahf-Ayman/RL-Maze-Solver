@@ -42,16 +42,16 @@ def render_maze_snapshot(
     if path is not None:
         for row, col in path:
             if 0 <= row < display.shape[0] and 0 <= col < display.shape[1] and grid[row, col] == 0:
-                display[row, col] = COLORS_RGB["visited"] # path = light blue
+                display[row, col] = COLORS_RGB["visited"] # path = light pink
 
     if start_pos is not None:
         start_row, start_col = start_pos
         if 0 <= start_row < display.shape[0] and 0 <= start_col < display.shape[1]:
-            display[start_row, start_col] = COLORS_RGB["start"] # source/start = yellow
+            display[start_row, start_col] = COLORS_RGB["start"] # source/start = blue
 
     goal_row, goal_col = goal_pos
     agent_row, agent_col = agent_pos
-    display[goal_row, goal_col] = COLORS_RGB["goal"] # goal = green
+    display[goal_row, goal_col] = COLORS_RGB["goal"] # goal = yellow
     display[agent_row, agent_col] = COLORS_RGB["agent"] # agent = red
 
     if ax is None:

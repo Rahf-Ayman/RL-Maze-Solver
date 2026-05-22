@@ -35,11 +35,6 @@ class Logger:
         self.steps.append(int(steps))
         self.success.append(bool(success))
 
-    def record(self, episode: int, reward: float, steps: int, success: bool = False) -> None:
-        """Compatibility alias for code that prefers ``record`` over ``log``."""
-
-        self.log(episode=episode, reward=reward, steps=steps, success=success)
-
     def moving_average(self, window: int = 50) -> List[float]:
         """Return a simple moving average of rewards.
 

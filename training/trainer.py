@@ -80,7 +80,7 @@ class Trainer:
                 success=episode_success,
             )
 
-            # Post-episode hook (e.g., epsilon decay)
+            # Post-episode hook (epsilon decay)
             self.agent.on_episode_end()
 
             # Periodic verbose output
@@ -135,7 +135,7 @@ class Trainer:
         """Stop the training loop gracefully."""
         self.is_running = False
 
-    def resume(self, n_episodes: int, **kwargs) -> Logger:
+    def resume(self, n_episodes: int, **kwargs) -> Logger: # kwargs = {"learning_rate": 0.1, "epsilon": 0.5} pass arg as dict 
         """Resume training for n more episodes."""
         return self.train(n_episodes=n_episodes, **kwargs)
 
@@ -160,7 +160,7 @@ class Trainer:
             agent_pos=self.env.agent_pos,
             goal_pos=self.env.goal_pos,
             start_pos=self.env.start_pos,
-            path=path,
+            path=path, # path with states
             title=plot_title,
             save_path=save_path,
         )

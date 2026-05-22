@@ -49,7 +49,7 @@ def plot_q_policy_heatmap(
 
     for row in range(env.height):
         for col in range(env.width):
-            if int(env.grid[row, col]) == 1:
+            if int(env.grid[row, col]) == 1: # wall
                 continue
             state = env._encode_state((row, col))
             q_values = np.asarray(agent.q_table[state], dtype=float)
@@ -66,7 +66,7 @@ def plot_q_policy_heatmap(
     for row in range(env.height):
         for col in range(env.width):
             if int(env.grid[row, col]) == 1:
-                axes.text(col, row, "#", ha="center", va="center", color="white", fontsize=7)
+                axes.text(col, row, "#", ha="center", va="center", color="black", fontsize=7)
             elif annotate_policy:
                 action = best_actions[row, col]
                 if action >= 0:
